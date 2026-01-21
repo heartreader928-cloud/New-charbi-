@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moon Love Card</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #05001a, #0b0033);
+    color:white;
+    text-align:center;
+}
+
+.page{
+    display:none;
+    min-height:100vh;
+    padding:20px;
+}
+.page.active{
+    display:block;
+}
+
+.moon{
+    width:120px;
+    height:120px;
+    margin:25px auto;
+    border-radius:50%;
+    background: radial-gradient(circle at 30% 30%, #fff, #ccc, #999);
+}
+
+button{
+    padding:14px 24px;
+    margin:10px;
+    border:none;
+    border-radius:25px;
+    font-size:16px;
+}
+.yes{background:#ff4d6d;color:white;}
+.no{background:#555;color:white;}
+.next{background:#00c2ff;color:white;display:none;}
+
+.popup{
+    position:fixed;
+    top:40%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:#111;
+    padding:16px 26px;
+    border-radius:16px;
+    display:none;
+    z-index:100;
+}
+
+.star{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:white;
+    animation:blink 2s infinite;
+}
+@keyframes blink{
+    0%,100%{opacity:0.2;}
+    50%{opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="popup" id="popup"></div>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+    <div class="moon"></div>
+    <h2>Kaise ho motu insaan 🤭</h2>
+    <p>Meri sweet wife Shruti 💖<br>
+    Hamesha khush raho ✨</p>
+
+    <button class="yes" onclick="good()">Theek ho 😊</button>
+    <button class="no" onclick="bad()">Theek nahi 😔</button><br>
+
+    <button class="next" id="next1" onclick="goPage(2)">Next ➡️</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+    <div class="moon"></div>
+    <h2>Hmm so honey 💕</h2>
+    <p>I love you 😌<br>Do you love me?</p>
+
+    <button onclick="optionClick(this)">Yes 💖</button>
+    <button onclick="optionClick(this)">No 🙂</button>
+    <button onclick="optionClick(this)">Option 1 🤭</button>
+    <button onclick="optionClick(this)">I am obsessed 😵‍💫</button><br>
+
+    <button class="next" id="next2" onclick="goPage(3)">Next ➡️</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+    <div class="moon"></div>
+    <h2>Thank you honey 💖</h2>
+    <p>
+    Thank you for coming into my life<br>
+    I love you too much 😘<br>
+    Ummmmmmmmmmmmmmmmhaaaaa 🤭
+    </p>
+
+    <p>
+    12 baje mujhe padhna hai 📚<br>
+    Aap so jaana ok 😴
+    </p>
+
+    <h3>Bye bye motu insaan 💕</h3>
+</div>
+
+<script>
+function popup(msg,time=2000){
+    let p=document.getElementById("popup");
+    p.innerText=msg;
+    p.style.display="block";
+    setTimeout(()=>{p.style.display="none";},time);
+}
+
+function good(){
+    popup("Achha laga sun ke 😊");
+    document.getElementById("next1").style.display="inline-block";
+}
+
+function bad(){
+    popup("Kya hua? Batao 🥺",2000);
+}
+
+function goPage(n){
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    document.getElementById("page"+n).classList.add("active");
+}
+
+let clicked=new Set();
+function optionClick(btn){
+    if(clicked.has(btn.innerText)) return;
+    clicked.add(btn.innerText);
+
+    if(btn.innerText.includes("Yes"))
+        popup("Yes yes ik ik 😌💖",3000);
+    else if(btn.innerText.includes("No"))
+        popup("I love you, no matter what 💕",3000);
+    else if(btn.innerText.includes("obsessed"))
+        popup("Achha 🤭 phir santre ki pic bhejo (just kidding 😜)",3000);
+    else
+        popup("Option noted 😄",3000);
+
+    if(clicked.size===4){
+        document.getElementById("next2").style.display="inline-block";
+    }
+}
+
+for(let i=0;i<60;i++){
+    let s=document.createElement("div");
+    s.className="star";
+    s.style.left=Math.random()*100+"vw";
+    s.style.top=Math.random()*100+"vh";
+    document.body.appendChild(s);
+}
+</script>
+
+</body>
+</html>
